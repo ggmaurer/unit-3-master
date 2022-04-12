@@ -62,3 +62,8 @@
     font-size: 0.8em;
     fill: #999;
 }
+
+.numbers {
+    fill: white;
+    font-family: sans-serif;
+}

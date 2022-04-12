@@ -5,7 +5,7 @@
     //begin script when window loads
     window.onload = setMap();
 
-    var attrArray = ["varA", "varB", "varC", "varD", "varE"];
+    var attrArray = ["PERC_OF_STATE_W_BACHELORS", "PERC_INCOMES_BELOW_POV", "PERC_UNDER_NO_DIPLOMA", "PERC_UNDER_W_DIPLOMA", "PERC_UNDER_BACHELORS"];
     var expressed = attrArray[0];        
 
     //set up choropleth map
@@ -88,7 +88,7 @@
         function joinData(usStates, csvData){
             for (var i=0; i<csvData.length; i++){
                 var csvRegion = csvData[i]; //the current region
-                var csvKey = csvRegion.adm1_code; //the CSV primary key
+                var csvKey = csvRegion.name; //the CSV primary key
             console.log(csvRegion);
             console.log(csvKey);
             
@@ -96,7 +96,7 @@
                 for (var a=0; a<usStates.length; a++){
 
                     var geojsonProps = usStates[a].properties; //the current region geojson properties
-                    var geojsonKey = geojsonProps.adm1_code; //the geojson primary key
+                    var geojsonKey = geojsonProps.name; //the geojson primary key
                     
                     //where primary keys match, transfer csv data to geojson properties object
                     if (geojsonKey == csvKey){
@@ -115,11 +115,11 @@
 
         function makeColorScale(data){
             var colorClasses = [
-                "#D4B9DA",
-                "#C994C7",
-                "#DF65B0",
-                "#DD1C77",
-                "#980043"
+                "#fee5d9",
+                "#fcae91",
+                "#fb6a4a",
+                "#de2d26",
+                "#a50f15"
             ];
         
             //create color scale generator
@@ -145,7 +145,7 @@
                 .enter()
                 .append("path")
                 .attr("class", function(d){
-                    return "states " + d.properties.adm1_code;
+                    return "states " + d.properties.name;
                 })
                 .attr("d",path)
                 .style("fill", function(d){
@@ -188,7 +188,7 @@
         //create a scale to size bars proportionally to frame and for axis
         var yScale = d3.scaleLinear()
             .range([463, 0])
-            .domain([0, 100]);
+            .domain([0, 30]);
     
         //set bars for each province
         var bars = chart.selectAll(".bar")
@@ -199,7 +199,7 @@
                 return b[expressed]-a[expressed]
             })
             .attr("class", function(d){
-                return "bar " + d.adm1_code;
+                return "bar " + d.name;
             })
             .attr("width", chartInnerWidth / csvData.length - 1)
             .attr("x", function(d, i){
@@ -220,7 +220,7 @@
             .attr("x", 40)
             .attr("y", 40)
             .attr("class", "chartTitle")
-            .text("Number of " + expressed[3] + " in Thousands");
+            .text("Percentage of " + expressed + " Below the Poverty Line");
     
         //create vertical axis generator
         var yAxis = d3.axisLeft()
@@ -238,6 +238,8 @@
             .attr("width", chartInnerWidth)
             .attr("height", chartInnerHeight)
             .attr("transform", translate);
+
+            
     };
 
 
