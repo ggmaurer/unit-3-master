@@ -39,6 +39,8 @@ function setMap(){
         var usStates = topojson.feature(states, states.objects.ne_50m_admin_1_states_provinces).features,
             surroundingCountries = topojson.feature(country, country.objects.ne_50m_admin_0_countries);
 
+            
+
             var graticule = d3.geoGraticule().step([5, 5]); //place graticule lines every 5 degrees of longitude and latitude
 
             //create graticule background
